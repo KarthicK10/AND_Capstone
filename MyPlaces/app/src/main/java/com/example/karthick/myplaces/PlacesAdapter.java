@@ -23,6 +23,14 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
             "Bhavani Indian Stores",
             "Schuylkill River Trail",
             "Nikhil's Home",
+            "Newyork Parking",
+            "Bhavani Indian Stores",
+            "Schuylkill River Trail",
+            "Nikhil's Home",
+            "Newyork Parking",
+            "Bhavani Indian Stores",
+            "Schuylkill River Trail",
+            "Nikhil's Home",
             "Newyork Parking"
     );
     /**
