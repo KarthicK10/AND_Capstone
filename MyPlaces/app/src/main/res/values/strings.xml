@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">My Places</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Empty places database -->
+    <string name="empty_places_list">"Add the places that you need handy."</string>
 </resources>
