@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,20 +18,8 @@ import java.util.List;
 
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdapterViewHolder>{
 
-    public List<String> labelList = Arrays.asList(
-            "Bhavani Indian Stores",
-            "Schuylkill River Trail",
-            "Nikhil's Home",
-            "Newyork Parking",
-            "Bhavani Indian Stores",
-            "Schuylkill River Trail",
-            "Nikhil's Home",
-            "Newyork Parking",
-            "Bhavani Indian Stores",
-            "Schuylkill River Trail",
-            "Nikhil's Home",
-            "Newyork Parking"
-    );
+    public List<String> mLabelList;
+
     /**
      * Cache of child views for a places list item
      */
@@ -44,6 +31,14 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
             super(view);
             mLabelView = (TextView) view.findViewById(R.id.list_item_place_label);
         }
+    }
+
+    public static interface PlacesAdapterOnClickHandler{
+        void onClick(PlacesAdapterViewHolder vh);
+    }
+
+    public PlacesAdapter(List<String> labelList){
+        mLabelList = labelList;
     }
 
 
@@ -102,7 +97,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
      */
     @Override
     public void onBindViewHolder(PlacesAdapterViewHolder holder, int position) {
-        holder.mLabelView.setText(labelList.get(position));
+        holder.mLabelView.setText(mLabelList.get(position));
     }
 
     /**
@@ -112,6 +107,6 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
      */
     @Override
     public int getItemCount() {
-        return labelList.size();
+        return mLabelList.size();
     }
 }

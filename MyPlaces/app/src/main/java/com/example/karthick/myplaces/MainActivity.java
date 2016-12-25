@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityFragment.Callback{
 
     private Context mContext;
     @Override
@@ -53,5 +53,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemSelected(Place place) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("PLACE_NAME", place.getName());
+        startActivity(intent);
     }
 }

@@ -23,6 +23,16 @@
             android:theme="@style/Theme.AppCompat.Dialog">
 
         </activity>
+
+        <activity
+            android:name=".DetailActivity"
+            android:parentActivityName=".MainActivity"
+            android:launchMode="singleTop">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+
+
+        </activity>
     </application>
 
 </manifest>

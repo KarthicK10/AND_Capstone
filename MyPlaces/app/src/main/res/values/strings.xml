@@ -5,6 +5,7 @@
     <string name="place_name">Place Name</string>
     <string name="enter_address">Enter address or pick from map -></string>
     <string name="enter_address_desc">Enter address or pick from map</string>
+    <string name="address_title">Address</string>
     <!-- Empty places database -->
     <string name="empty_places_list">"Add the places that you need handy."</string>
 

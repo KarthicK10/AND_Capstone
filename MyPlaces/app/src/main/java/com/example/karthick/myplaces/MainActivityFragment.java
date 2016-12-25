@@ -10,13 +10,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
 
+    public List<String> labelList = Arrays.asList(
+            "Bhavani Indian Stores",
+            "Schuylkill River Trail",
+            "Nikhil's Home",
+            "Newyork Parking",
+            "Bhavani Indian Stores",
+            "Schuylkill River Trail",
+            "Nikhil's Home",
+            "Newyork Parking",
+            "Bhavani Indian Stores",
+            "Schuylkill River Trail",
+            "Nikhil's Home",
+            "Newyork Parking"
+    );
+
     private RecyclerView mRecyclerView;
     private PlacesAdapter mPlacesAdapter;
+
+    /**
+     * A callback interface that all activities containing this fragment must
+     * implement. This mechanism allows activities to be notified of item
+     * selections.
+     */
+    public interface Callback{
+        public void onItemSelected(Place place);
+    }
 
     public MainActivityFragment() {
     }
@@ -61,8 +88,17 @@ public class MainActivityFragment extends Fragment {
 
         //The PlacesAdapter will take data from a source and
         //use it to populate the RecylcerView it's attached to.
-        mPlacesAdapter = new PlacesAdapter();
+        mPlacesAdapter = new PlacesAdapter(labelList);
         mRecyclerView.setAdapter(mPlacesAdapter);
+        mRecyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Place place = new Place(labelList.get(position));
+                        ((Callback)getActivity()).onItemSelected(place);
+                    }
+                })
+        );
 
         return rootView;
     }
