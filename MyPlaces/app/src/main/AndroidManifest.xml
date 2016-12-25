@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".DetailActivity"
+            android:name=".AddActivity"
             android:label="@string/add_place"
             android:theme="@style/Theme.AppCompat.Dialog">
 
