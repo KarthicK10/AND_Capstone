@@ -1,9 +1,11 @@
-package com.example.karthick.myplaces;
+package com.example.karthick.myplaces.ui;
 
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
+import com.example.karthick.myplaces.R;
 
 public class DetailActivity extends AppCompatActivity {
 

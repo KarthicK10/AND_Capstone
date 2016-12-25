@@ -1,7 +1,9 @@
-package com.example.karthick.myplaces;
+package com.example.karthick.myplaces.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.karthick.myplaces.R;
 
 public class AddActivity extends AppCompatActivity {
 

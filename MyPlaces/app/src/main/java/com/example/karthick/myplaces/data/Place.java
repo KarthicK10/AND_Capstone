@@ -1,4 +1,4 @@
-package com.example.karthick.myplaces;
+package com.example.karthick.myplaces.data;
 
 /**
  * Created by KarthicK on 12/25/2016.

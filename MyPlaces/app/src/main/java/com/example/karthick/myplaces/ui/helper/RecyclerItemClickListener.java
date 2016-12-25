@@ -1,4 +1,4 @@
-package com.example.karthick.myplaces;
+package com.example.karthick.myplaces.ui.helper;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

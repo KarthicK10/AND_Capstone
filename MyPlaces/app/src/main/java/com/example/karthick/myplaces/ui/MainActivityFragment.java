@@ -1,4 +1,4 @@
-package com.example.karthick.myplaces;
+package com.example.karthick.myplaces.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.karthick.myplaces.data.Place;
+import com.example.karthick.myplaces.ui.helper.PlacesAdapter;
+import com.example.karthick.myplaces.R;
+import com.example.karthick.myplaces.ui.helper.RecyclerItemClickListener;
 
 import java.util.Arrays;
 import java.util.List;
