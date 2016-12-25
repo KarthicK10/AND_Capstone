@@ -18,7 +18,7 @@ public class PlacesProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private PlacesDBHelper mPlacesDBHelper;
 
-    static final int ALL_PLACES = 100;
+    static final int PLACES = 100;
 
     @Override
     public boolean onCreate() {
@@ -31,7 +31,7 @@ public class PlacesProvider extends ContentProvider {
     public Cursor query(Uri uri, String[] projections, String selection, String[] selectionArgs, String sortOrder) {
         Cursor retCursor;
         switch (sUriMatcher.match(uri)){
-            case ALL_PLACES:
+            case PLACES:
                 retCursor = mPlacesDBHelper.getReadableDatabase().query(
                         PlacesContract.PlaceEntry.TABLE_NAME,
                         null,
@@ -53,7 +53,7 @@ public class PlacesProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         switch (sUriMatcher.match(uri)){
-            case ALL_PLACES:
+            case PLACES:
                 return PlacesContract.PlaceEntry.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
@@ -68,7 +68,7 @@ public class PlacesProvider extends ContentProvider {
         final int match = sUriMatcher.match(uri);
 
         switch (match){
-            case ALL_PLACES:
+            case PLACES:
                 long _id = db.insert(PlacesContract.PlaceEntry.TABLE_NAME, null, contentValues);
                 break;
             default:
@@ -83,7 +83,7 @@ public class PlacesProvider extends ContentProvider {
         int rowsDeleted = 0;
         final SQLiteDatabase db = new PlacesDBHelper(getContext()).getWritableDatabase();
         switch (sUriMatcher.match(uri)){
-            case ALL_PLACES:
+            case PLACES:
                 rowsDeleted = db.delete(
                         PlacesContract.PlaceEntry.TABLE_NAME,
                         selection,
@@ -111,7 +111,7 @@ public class PlacesProvider extends ContentProvider {
         final String authority = PlacesContract.CONTENT_AUTHORIY;
 
         // For each type of URI you want to add, create a corresponding code.
-        matcher.addURI(authority, PlacesContract.PATH_PLACE, ALL_PLACES);
+        matcher.addURI(authority, PlacesContract.PATH_PLACE, PLACES);
 
         return matcher;
     }
