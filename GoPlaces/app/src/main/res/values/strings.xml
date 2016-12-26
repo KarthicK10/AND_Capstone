@@ -13,4 +13,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="pick_location_desc">Location Picker</string>
+
+    <string name="content_authority">com.example.karthick.goplaces</string>
 </resources>

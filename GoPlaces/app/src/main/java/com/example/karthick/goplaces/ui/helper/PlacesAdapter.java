@@ -1,5 +1,7 @@
 package com.example.karthick.goplaces.ui.helper;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +10,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.karthick.goplaces.R;
-
-import java.util.List;
+import com.example.karthick.goplaces.data.Place;
+import com.example.karthick.goplaces.ui.MainActivityFragment;
 
 /**
  * Created by KarthicK on 12/24/2016.
@@ -20,7 +22,8 @@ import java.util.List;
 
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdapterViewHolder>{
 
-    public List<String> mLabelList;
+    private Cursor mCursor;
+    final private View mEmptyView;
 
     /**
      * Cache of child views for a places list item
@@ -39,8 +42,8 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
         void onClick(PlacesAdapterViewHolder vh);
     }
 
-    public PlacesAdapter(List<String> labelList){
-        mLabelList = labelList;
+    public PlacesAdapter(Context context, View emptyView){
+        mEmptyView = emptyView;
     }
 
 
@@ -99,7 +102,8 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
      */
     @Override
     public void onBindViewHolder(PlacesAdapterViewHolder holder, int position) {
-        holder.mLabelView.setText(mLabelList.get(position));
+        mCursor.moveToPosition(position);
+        holder.mLabelView.setText(mCursor.getString(MainActivityFragment.COL_PLACE_NAME));
     }
 
     /**
@@ -109,6 +113,26 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
      */
     @Override
     public int getItemCount() {
-        return mLabelList.size();
+        if ( null == mCursor ) return 0;
+        return mCursor.getCount();
+    }
+
+    public void swapCursor(Cursor newCursor) {
+        mCursor = newCursor;
+        notifyDataSetChanged();
+        mEmptyView.setVisibility(getItemCount() == 0 ? View.VISIBLE : View.GONE);
+    }
+
+    /*
+     * Returns the item from a specified position
+     *
+     * @param - The position to retrieve from
+     * @return - The place item at position
+     */
+    public Place getItem(int position){
+        mCursor.moveToPosition(position);
+        return new Place(
+                mCursor.getString(MainActivityFragment.COL_PLACE_NAME),
+                mCursor.getString(MainActivityFragment.COL_PLACE_ADDRESS));
     }
 }

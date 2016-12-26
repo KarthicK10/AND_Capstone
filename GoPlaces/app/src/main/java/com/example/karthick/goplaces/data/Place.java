@@ -9,9 +9,9 @@ public class Place {
     private String name;
     private String address;
 
-    public Place(String name){
+    public Place(String name, String address){
         this.name = name;
-        this.address = "203, Community Dr, Apt E, Reading, PA 19607";
+        this.address = address;
     }
 
     public String getName() {
