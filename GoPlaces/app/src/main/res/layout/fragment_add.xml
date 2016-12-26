@@ -34,12 +34,11 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="@string/enter_address"
-            android:contentDescription="@string/enter_address_desc"
             android:ems="10"
             android:id="@+id/editAddress" />
 
         <ImageView
+            android:id="@+id/place_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_current_location"

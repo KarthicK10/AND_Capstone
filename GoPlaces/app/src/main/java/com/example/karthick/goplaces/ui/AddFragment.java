@@ -9,11 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.karthick.goplaces.R;
 import com.example.karthick.goplaces.data.Place;
 import com.example.karthick.goplaces.data.PlacesContract;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 
 /**
@@ -46,6 +49,22 @@ public class AddFragment extends Fragment {
                 }
             }
         });
+        ImageView placePickerImageView = (ImageView) rootView.findViewById(R.id.place_picker);
+        // Check to see if Google Play services is available. The Place Picker API is available
+        // through Google Play services, so if this is false, we'll just carry on as though this
+        // feature does not exist. If it is true, however, we can add a place picker widget.
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(getContext());
+        // Add the get current location widget to our location preference based on resultCode
+        if(resultCode == ConnectionResult.SUCCESS ){
+            placePickerImageView.setVisibility(View.VISIBLE);
+            addressEditText.setText(getContext().getString(R.string.enter_address_or_pick));
+            addressEditText.setContentDescription(getContext().getString(R.string.enter_address_or_pick_desc));
+        }
+        else{
+            placePickerImageView.setVisibility(View.GONE);
+            addressEditText.setText(getContext().getString(R.string.enter_address));
+        }
         return rootView;
     }
 
