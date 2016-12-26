@@ -70,6 +70,12 @@
 
     </LinearLayout>
 
-
+    <ImageView
+        android:id="@+id/attribution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/powered_by_google_light"
+        android:scaleType="fitCenter"
+        android:layout_marginTop="4dp"/>
 
 </LinearLayout>

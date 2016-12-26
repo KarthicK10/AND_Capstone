@@ -38,7 +38,6 @@ public class AddFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class AddFragment extends Fragment {
                 }
             }
         });
+        ImageView attribution = (ImageView) rootView.findViewById(R.id.attribution);
         ImageView placePickerImageView = (ImageView) rootView.findViewById(R.id.place_picker);
         // Check to see if Google Play services is available. The Place Picker API is available
         // through Google Play services, so if this is false, we'll just carry on as though this
@@ -80,13 +80,15 @@ public class AddFragment extends Fragment {
                     } catch (GooglePlayServicesNotAvailableException | GooglePlayServicesRepairableException e){
                        //do nothing
                     }
-
                 }
             });
+            //Add attribution
+            attribution.setVisibility(View.VISIBLE);
         }
         else{
             placePickerImageView.setVisibility(View.GONE);
             mAddressEditText.setText(getContext().getString(R.string.enter_address));
+            attribution.setVisibility(View.GONE);
         }
         return rootView;
     }
