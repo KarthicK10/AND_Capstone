@@ -2,6 +2,7 @@ package com.example.karthick.goplaces.ui;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,11 @@ import com.example.karthick.goplaces.data.Place;
 import com.example.karthick.goplaces.data.PlacesContract;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.ui.PlacePicker;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -24,6 +30,9 @@ import com.google.android.gms.common.GoogleApiAvailability;
  */
 public class AddFragment extends Fragment {
 
+    protected final static int PLACE_PICKER_REQUEST = 1010;
+
+    EditText mAddressEditText;
 
     public AddFragment() {
         // Required empty public constructor
@@ -37,12 +46,12 @@ public class AddFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_add, container, false);
         Button addButton = (Button) rootView.findViewById(R.id.add_button);
         final EditText nameEditText = (EditText) rootView.findViewById(R.id.editName);
-        final EditText addressEditText = (EditText) rootView.findViewById(R.id.editAddress);
+        mAddressEditText = (EditText) rootView.findViewById(R.id.editAddress);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = nameEditText.getText().toString();
-                String address = addressEditText.getText().toString();
+                String address = mAddressEditText.getText().toString();
                 Place place = new Place(name, address);
                 if(validatePlace(place)){
                    addPlace(place);
@@ -58,12 +67,26 @@ public class AddFragment extends Fragment {
         // Add the get current location widget to our location preference based on resultCode
         if(resultCode == ConnectionResult.SUCCESS ){
             placePickerImageView.setVisibility(View.VISIBLE);
-            addressEditText.setText(getContext().getString(R.string.enter_address_or_pick));
-            addressEditText.setContentDescription(getContext().getString(R.string.enter_address_or_pick_desc));
+            mAddressEditText.setText(getContext().getString(R.string.enter_address_or_pick));
+            mAddressEditText.setContentDescription(getContext().getString(R.string.enter_address_or_pick_desc));
+            placePickerImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getActivity(), "Location picker", Toast.LENGTH_SHORT).show();
+                    //Launch the place picker
+                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                    try{
+                        startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
+                    } catch (GooglePlayServicesNotAvailableException | GooglePlayServicesRepairableException e){
+                       //do nothing
+                    }
+
+                }
+            });
         }
         else{
             placePickerImageView.setVisibility(View.GONE);
-            addressEditText.setText(getContext().getString(R.string.enter_address));
+            mAddressEditText.setText(getContext().getString(R.string.enter_address));
         }
         return rootView;
     }
@@ -85,4 +108,30 @@ public class AddFragment extends Fragment {
         toast.show();
     }
 
+    /**
+     * Receive the result from a previous call to
+     * {@link #startActivityForResult(Intent, int)}.  This follows the
+     * related Activity API as described there in
+     * {@link AddActivity#onActivityResult(int, int, Intent)}.
+     *
+     * @param requestCode The integer request code originally supplied to
+     *                    startActivityForResult(), allowing you to identify who this
+     *                    result came from.
+     * @param resultCode  The integer result code returned by the child activity
+     *                    through its setResult().
+     * @param data        An Intent, which can return result data to the caller
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == PLACE_PICKER_REQUEST){
+            if(resultCode == RESULT_OK){
+                //Get the place picked
+                com.google.android.gms.location.places.Place pickedPlace = PlacePicker.getPlace(getActivity(), data);
+                //Set the address of the place into the address edit text field.
+                mAddressEditText.setText(pickedPlace.getAddress());
+            }
+        }else{
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }
