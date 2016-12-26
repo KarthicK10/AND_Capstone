@@ -30,9 +30,15 @@
             android:launchMode="singleTop">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.karthick.goplaces.ui.MainActivity"/>
-
-
         </activity>
+
+        <provider
+            android:authorities="@string/content_authority"
+            android:name=".data.PlacesProvider"
+            android:exported="false"
+            android:syncable="true" />
+
     </application>
+
 
 </manifest>
