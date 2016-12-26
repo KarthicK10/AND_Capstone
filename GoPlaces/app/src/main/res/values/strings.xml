@@ -3,8 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="add_place">Add Place</string>
     <string name="place_name">Place Name</string>
-    <string name="enter_address_or_pick">Enter address or pick from map -></string>
-    <string name="enter_address_or_pick_desc">Enter address or pick from map</string>
+    <string name="enter_address_or_pick">Enter address or pick from map</string>
     <string name="enter_address">Address</string>
     <string name="address_title">Address</string>
     <!-- Empty places database -->

@@ -27,8 +27,11 @@
         <activity
             android:name="com.example.karthick.goplaces.ui.AddActivity"
             android:label="@string/add_place"
-            android:theme="@style/Theme.AppCompat.Light.Dialog">
-
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:parentActivityName="com.example.karthick.goplaces.ui.MainActivity"
+            android:launchMode="singleTop">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.karthick.goplaces.ui.MainActivity"/>
         </activity>
 
         <activity

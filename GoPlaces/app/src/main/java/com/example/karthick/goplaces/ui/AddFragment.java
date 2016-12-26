@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class AddFragment extends Fragment {
                 if(validatePlace(place)){
                    addPlace(place);
                 }
+                NavUtils.navigateUpFromSameTask(getActivity());
             }
         });
         ImageView attribution = (ImageView) rootView.findViewById(R.id.attribution);
@@ -67,12 +69,10 @@ public class AddFragment extends Fragment {
         // Add the get current location widget to our location preference based on resultCode
         if(resultCode == ConnectionResult.SUCCESS ){
             placePickerImageView.setVisibility(View.VISIBLE);
-            mAddressEditText.setText(getContext().getString(R.string.enter_address_or_pick));
-            mAddressEditText.setContentDescription(getContext().getString(R.string.enter_address_or_pick_desc));
+            mAddressEditText.setHint(getContext().getString(R.string.enter_address_or_pick));
             placePickerImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(getActivity(), "Location picker", Toast.LENGTH_SHORT).show();
                     //Launch the place picker
                     PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
                     try{
@@ -87,14 +87,17 @@ public class AddFragment extends Fragment {
         }
         else{
             placePickerImageView.setVisibility(View.GONE);
-            mAddressEditText.setText(getContext().getString(R.string.enter_address));
+            mAddressEditText.setHint(getContext().getString(R.string.enter_address));
             attribution.setVisibility(View.GONE);
         }
         return rootView;
     }
 
     private boolean validatePlace(Place place){
-        //TODO - Actual validation
+        if(place.getName() == null || place.getName().trim().equals(""))
+            return false;
+        if(place.getAddress() == null || place.getAddress().trim().equals(""))
+            return false;
         return true;
     }
 
@@ -106,7 +109,7 @@ public class AddFragment extends Fragment {
 
         //add place
         getContext().getContentResolver().insert(PlacesContract.PlaceEntry.CONTENT_URI, placeContentValues);
-        Toast toast = Toast.makeText(getContext(), "Added to Places", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(getContext(), place.getAddress() + " added to Places", Toast.LENGTH_SHORT);
         toast.show();
     }
 

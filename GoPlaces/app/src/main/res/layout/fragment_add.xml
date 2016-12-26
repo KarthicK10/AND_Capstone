@@ -5,23 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/white" />
-
-    <android.support.v4.widget.Space
-        android:layout_height="200dp"
-        android:layout_width="match_parent"
-        />-->
-
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="@string/place_name"
+        android:hint="@string/place_name"
         android:ems="10"
         android:id="@+id/editName" />
 
@@ -49,26 +37,16 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end|right"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
-
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"/>
-
+        android:layout_height="wrap_content">
         <Button
             android:id="@+id/add_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end|right"
             android:text="Add"/>
-
-    </LinearLayout>
+    </FrameLayout>
 
     <ImageView
         android:id="@+id/attribution"
