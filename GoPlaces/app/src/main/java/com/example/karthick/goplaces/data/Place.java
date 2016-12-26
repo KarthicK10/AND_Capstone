@@ -6,6 +6,8 @@ package com.example.karthick.goplaces.data;
 
 public class Place {
 
+    public static final String PLACE_NAME_KEY = "PLACE_NAME";
+    public static final String PLACE_ADDRESS_KEY = "PLACE_ADDRESS";
     private String name;
     private String address;
 
