@@ -34,7 +34,7 @@ public final class PlacesContract {
         //place name, stores as String
         public static final String COLUMN_PLACE_NAME = "name";
 
-        //address, stores as String
+        //address, stored as String
         public static final String COLUMN_PLACE_ADDRESS = "address";
 
         //End - Column names
