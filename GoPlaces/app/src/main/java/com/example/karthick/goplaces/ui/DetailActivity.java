@@ -13,13 +13,25 @@ import android.widget.TextView;
 import com.example.karthick.goplaces.R;
 import com.example.karthick.goplaces.data.Place;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
+
+    @BindView(R.id.toolbar_detail)
+    Toolbar toolbar;
+    @BindView(R.id.collapsing_toolbar_detail)
+    CollapsingToolbarLayout collapsingToolbar;
+    @BindView(R.id.address)
+    TextView addressTextView;
+    @BindView(R.id.car_fab)
+    FloatingActionButton carFAB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
+        ButterKnife.bind(this);
         if(savedInstanceState == null){
 
             //Get the data passed in the intent
@@ -28,21 +40,16 @@ public class DetailActivity extends AppCompatActivity {
             final String placeAddress = intent.getStringExtra(Place.PLACE_ADDRESS_KEY);
 
             //Toolbar
-            final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_detail);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
             //Collapsing tool bar with the place name as title
-            CollapsingToolbarLayout collapsingToolbar =
-                    (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_detail);
             collapsingToolbar.setTitle(placeName);
 
             //Set the address
-            TextView addressTextView = (TextView) findViewById(R.id.address);
             addressTextView.setText(placeAddress);
 
             //Maps - Drive Intent on click of car FAB.
-            FloatingActionButton carFAB = (FloatingActionButton) findViewById(R.id.car_fab);
             carFAB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

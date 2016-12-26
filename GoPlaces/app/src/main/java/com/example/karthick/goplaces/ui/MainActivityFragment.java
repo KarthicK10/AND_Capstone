@@ -22,28 +22,18 @@ import com.example.karthick.goplaces.data.PlacesContract;
 import com.example.karthick.goplaces.ui.helper.PlacesAdapter;
 import com.example.karthick.goplaces.ui.helper.RecyclerItemClickListener;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    /*public List<String> labelList = Arrays.asList(
-            "Bhavani Indian Stores",
-            "Schuylkill River Trail",
-            "Nikhil's Home",
-            "Newyork Parking",
-            "Bhavani Indian Stores",
-            "Schuylkill River Trail",
-            "Nikhil's Home",
-            "Newyork Parking",
-            "Bhavani Indian Stores",
-            "Schuylkill River Trail",
-            "Nikhil's Home",
-            "Newyork Parking"
-    );*/
-
-    private RecyclerView mRecyclerView;
     private PlacesAdapter mPlacesAdapter;
+
+    @BindView(R.id.recyclerview_places) RecyclerView mRecyclerView;
+    @BindView(R.id.recyclerview_places_empty) View emptyView;
 
     private static final int PLACES_LOADER = 0;
 
@@ -97,14 +87,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-        //Get a reference to the RecyclerView
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_places);
+        ButterKnife.bind(this, rootView);
         //Set the layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //Get reference to empty view
-        View emptyView = rootView.findViewById(R.id.recyclerview_places_empty);
-
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);

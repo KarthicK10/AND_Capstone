@@ -23,6 +23,9 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static android.app.Activity.RESULT_OK;
 
 
@@ -33,7 +36,12 @@ public class AddFragment extends Fragment {
 
     protected final static int PLACE_PICKER_REQUEST = 1010;
 
-    EditText mAddressEditText;
+
+    @BindView(R.id.add_button) Button addButton;
+    @BindView(R.id.editName) EditText nameEditText;
+    @BindView(R.id.editAddress) EditText mAddressEditText;
+    @BindView(R.id.attribution) ImageView attribution;
+    @BindView(R.id.place_picker) ImageView placePickerImageView;
 
     public AddFragment() {
         // Required empty public constructor
@@ -44,9 +52,7 @@ public class AddFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_add, container, false);
-        Button addButton = (Button) rootView.findViewById(R.id.add_button);
-        final EditText nameEditText = (EditText) rootView.findViewById(R.id.editName);
-        mAddressEditText = (EditText) rootView.findViewById(R.id.editAddress);
+        ButterKnife.bind(this, rootView);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,8 +65,6 @@ public class AddFragment extends Fragment {
                 NavUtils.navigateUpFromSameTask(getActivity());
             }
         });
-        ImageView attribution = (ImageView) rootView.findViewById(R.id.attribution);
-        ImageView placePickerImageView = (ImageView) rootView.findViewById(R.id.place_picker);
         // Check to see if Google Play services is available. The Place Picker API is available
         // through Google Play services, so if this is false, we'll just carry on as though this
         // feature does not exist. If it is true, however, we can add a place picker widget.
