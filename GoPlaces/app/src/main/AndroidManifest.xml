@@ -8,6 +8,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBkYpQt70UmyArctuDQU19wJupIX6opZkc"/>
         <activity
             android:name="com.example.karthick.goplaces.ui.MainActivity"
             android:label="@string/app_name">
