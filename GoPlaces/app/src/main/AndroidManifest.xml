@@ -27,7 +27,7 @@
         <activity
             android:name="com.example.karthick.goplaces.ui.AddActivity"
             android:label="@string/add_place"
-            android:theme="@style/Theme.AppCompat.Dialog">
+            android:theme="@style/Theme.AppCompat.Light.Dialog">
 
         </activity>
 
