@@ -6,6 +6,8 @@
     <string name="enter_address_or_pick">Enter address or pick from map</string>
     <string name="enter_address">Address</string>
     <string name="address_title">Address</string>
+    <string name="add_place_fab_desc">Add Place</string>
+    <string name="car_fab_desc">Start Navigation</string>
     <!-- Empty places database -->
     <string name="empty_places_list">"Add the places that you need handy."</string>
 

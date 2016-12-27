@@ -114,7 +114,8 @@
         app:layout_anchorGravity="bottom|right|end"
         android:src="@drawable/ic_drive_car"
         android:layout_margin="@dimen/fab_margin"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:contentDescription="@string/car_fab_desc"/>
 
 </android.support.design.widget.CoordinatorLayout>
 
