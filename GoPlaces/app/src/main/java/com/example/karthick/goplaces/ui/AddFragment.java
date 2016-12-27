@@ -2,6 +2,7 @@ package com.example.karthick.goplaces.ui;
 
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,8 @@ import static android.app.Activity.RESULT_OK;
 public class AddFragment extends Fragment {
 
     protected final static int PLACE_PICKER_REQUEST = 1010;
-
+    public static final String ACTION_DATA_UPDATED =
+            "com.example.karthick.goplaces.ACTION_DATA_UPDATED";
 
     @BindView(R.id.add_button) Button addButton;
     @BindView(R.id.editName) EditText nameEditText;
@@ -115,6 +117,18 @@ public class AddFragment extends Fragment {
         getContext().getContentResolver().insert(PlacesContract.PlaceEntry.CONTENT_URI, placeContentValues);
         Toast toast = Toast.makeText(getContext(), place.getAddress() + " added to Places", Toast.LENGTH_SHORT);
         toast.show();
+
+        //Update the widgets
+        updateWidgets();
+
+    }
+
+    private void updateWidgets(){
+        //Update the widgets.
+        Context context = getContext();
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(getContext().getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
     }
 
     /**

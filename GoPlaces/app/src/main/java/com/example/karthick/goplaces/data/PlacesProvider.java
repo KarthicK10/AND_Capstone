@@ -39,7 +39,7 @@ public class PlacesProvider extends ContentProvider {
                         null,
                         null,
                         null,
-                        null
+                        sortOrder
                 );
                 break;
             default:
