@@ -64,6 +64,10 @@
             android:exported="false"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
+        <service
+            android:name=".data.GooglePlacesIntentService"
+            android:exported="false"/>
+
     </application>
 
 

@@ -35,10 +35,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityFragm
     }
 
     @Override
-    public void onItemSelected(Place place) {
+    public void onItemSelected(long placeId) {
         Intent intent = new Intent(this, DetailActivity.class);
-        intent.putExtra(Place.PLACE_NAME_KEY, place.getName());
-        intent.putExtra(Place.PLACE_ADDRESS_KEY, place.getAddress());
+        intent.putExtra(Place.PLACE_ID_KEY, placeId);
         startActivity(intent);
     }
 }

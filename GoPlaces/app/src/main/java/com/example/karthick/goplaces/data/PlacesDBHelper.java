@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class PlacesDBHelper extends SQLiteOpenHelper{
 
     // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 5;
 
     static final String DATABASE_NAME = "places.db";
 
@@ -29,8 +29,14 @@ public class PlacesDBHelper extends SQLiteOpenHelper{
          */
         final String SQL_CREATE_PLACE_TABLE = "CREATE TABLE " + PlacesContract.PlaceEntry.TABLE_NAME + " (" +
                 PlacesContract.PlaceEntry._ID + " INTEGER PRIMARY KEY," +
+                PlacesContract.PlaceEntry.COLUMN_PLACE_GOOGLE_ID + " TEXT, " +
                 PlacesContract.PlaceEntry.COLUMN_PLACE_NAME + " TEXT UNIQUE NOT NULL, " +
-                PlacesContract.PlaceEntry.COLUMN_PLACE_ADDRESS + " TEXT NOT NULL " +
+                PlacesContract.PlaceEntry.COLUMN_PLACE_GOOGLE_NAME + " TEXT, " +
+                PlacesContract.PlaceEntry.COLUMN_PLACE_ADDRESS + " TEXT NOT NULL,  " +
+                PlacesContract.PlaceEntry.COLUMN_PLACE_PHONE + " TEXT, " +
+                PlacesContract.PlaceEntry.COLUMN_PLACE_WEBSITE + " TEXT, " +
+                PlacesContract.PlaceEntry.COLUMN_PLACE_LATITUDE + " TEXT, " +
+                PlacesContract.PlaceEntry.COLUMN_PLACE_LONGITUDE + " TEXT " +
                 " );";
 
         sqLiteDatabase.execSQL(SQL_CREATE_PLACE_TABLE);

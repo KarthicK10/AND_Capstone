@@ -1,9 +1,11 @@
 package com.example.karthick.goplaces.ui;
 
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
@@ -16,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.karthick.goplaces.R;
+import com.example.karthick.goplaces.data.GooglePlace;
+import com.example.karthick.goplaces.data.GooglePlacesIntentService;
 import com.example.karthick.goplaces.data.Place;
 import com.example.karthick.goplaces.data.PlacesContract;
 import com.google.android.gms.common.ConnectionResult;
@@ -35,6 +39,8 @@ import static android.app.Activity.RESULT_OK;
  */
 public class AddFragment extends Fragment {
 
+    private static final String LOG_TAG = AddFragment.class.getSimpleName();
+
     protected final static int PLACE_PICKER_REQUEST = 1010;
     public static final String ACTION_DATA_UPDATED =
             "com.example.karthick.goplaces.ACTION_DATA_UPDATED";
@@ -44,6 +50,8 @@ public class AddFragment extends Fragment {
     @BindView(R.id.editAddress) EditText mAddressEditText;
     @BindView(R.id.attribution) ImageView attribution;
     @BindView(R.id.place_picker) ImageView placePickerImageView;
+
+    private GooglePlace mGooglePlace;
 
     public AddFragment() {
         // Required empty public constructor
@@ -58,11 +66,24 @@ public class AddFragment extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = nameEditText.getText().toString();
-                String address = mAddressEditText.getText().toString();
+                String name, address, googleName, googleId;
+
+                name = nameEditText.getText().toString();
+                address = mAddressEditText.getText().toString();
+
                 Place place = new Place(name, address);
+
                 if(validatePlace(place)){
-                   addPlace(place);
+                    long addedPlace_id = addPlace(place);
+                    Toast toast = Toast.makeText(getContext(), place.getName() + " added to Places", Toast.LENGTH_SHORT);
+                    toast.show();
+                    //Update the widgets
+                    updateWidgets();
+                    //update place details from Google
+                    Intent serviceIntent = new Intent(getActivity(), GooglePlacesIntentService.class);
+                    serviceIntent.putExtra(GooglePlacesIntentService.PLACE_ID_KEY, addedPlace_id);
+                    serviceIntent.putExtra(GooglePlacesIntentService.ADDRESS_KEY, address);
+                    getActivity().startService(serviceIntent);
                 }
                 NavUtils.navigateUpFromSameTask(getActivity());
             }
@@ -99,38 +120,6 @@ public class AddFragment extends Fragment {
         return rootView;
     }
 
-    private boolean validatePlace(Place place){
-        if(place.getName() == null || place.getName().trim().equals(""))
-            return false;
-        if(place.getAddress() == null || place.getAddress().trim().equals(""))
-            return false;
-        return true;
-    }
-
-    private void addPlace(Place place){
-        //Create content values
-        ContentValues placeContentValues = new ContentValues();
-        placeContentValues.put(PlacesContract.PlaceEntry.COLUMN_PLACE_NAME, place.getName());
-        placeContentValues.put(PlacesContract.PlaceEntry.COLUMN_PLACE_ADDRESS, place.getAddress());
-
-        //add place
-        getContext().getContentResolver().insert(PlacesContract.PlaceEntry.CONTENT_URI, placeContentValues);
-        Toast toast = Toast.makeText(getContext(), place.getAddress() + " added to Places", Toast.LENGTH_SHORT);
-        toast.show();
-
-        //Update the widgets
-        updateWidgets();
-
-    }
-
-    private void updateWidgets(){
-        //Update the widgets.
-        Context context = getContext();
-        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
-                .setPackage(getContext().getPackageName());
-        context.sendBroadcast(dataUpdatedIntent);
-    }
-
     /**
      * Receive the result from a previous call to
      * {@link #startActivityForResult(Intent, int)}.  This follows the
@@ -157,4 +146,34 @@ public class AddFragment extends Fragment {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    private boolean validatePlace(Place place){
+        if(place.getName() == null || place.getName().trim().equals(""))
+            return false;
+        if(place.getAddress() == null || place.getAddress().trim().equals(""))
+            return false;
+        return true;
+    }
+
+    private long addPlace(Place place){
+        //Create content values
+        ContentValues placeContentValues = new ContentValues();
+        placeContentValues.put(PlacesContract.PlaceEntry.COLUMN_PLACE_NAME, place.getName());
+        placeContentValues.put(PlacesContract.PlaceEntry.COLUMN_PLACE_ADDRESS, place.getAddress());
+
+        //add place
+        Uri insertedUri = getContext().getContentResolver().insert(PlacesContract.PlaceEntry.CONTENT_URI, placeContentValues);
+        long locationId = ContentUris.parseId(insertedUri);
+
+        return locationId;
+    }
+
+    private void updateWidgets(){
+        //Update the widgets.
+        Context context = getContext();
+        Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED)
+                .setPackage(getContext().getPackageName());
+        context.sendBroadcast(dataUpdatedIntent);
+    }
+
 }

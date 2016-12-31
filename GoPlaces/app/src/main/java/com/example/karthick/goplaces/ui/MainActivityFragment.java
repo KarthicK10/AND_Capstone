@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 
 import com.example.karthick.goplaces.R;
-import com.example.karthick.goplaces.data.Place;
 import com.example.karthick.goplaces.data.PlacesContract;
 import com.example.karthick.goplaces.ui.helper.PlacesAdapter;
 import com.example.karthick.goplaces.ui.helper.RecyclerItemClickListener;
@@ -37,13 +36,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
     private static final int PLACES_LOADER = 0;
 
-    private static final String[] PLACE_COLUMNS = {
+    private static final String[] PLACES_COLUMNS = {
             PlacesContract.PlaceEntry.TABLE_NAME + "." + PlacesContract.PlaceEntry._ID,
             PlacesContract.PlaceEntry.COLUMN_PLACE_NAME,
             PlacesContract.PlaceEntry.COLUMN_PLACE_ADDRESS
     };
 
-    // These indices are tied to PLACE_COLUMNS.  If PLACE_COLUMNS changes, these
+    // These indices are tied to PLACES_COLUMNS.  If PLACES_COLUMNS changes, these
     // must change.
     public static final int COL_PLACE_ID = 0;
     public static final int COL_PLACE_NAME = 1;
@@ -55,7 +54,10 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
      * selections.
      */
     public interface Callback{
-        public void onItemSelected(Place place);
+        /*
+        * Detail Activity callback for when an item has been selected
+        */
+        public void onItemSelected(long placeId);
     }
 
     public MainActivityFragment() {
@@ -102,8 +104,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener(){
                     @Override
                     public void onItemClick(View view, int position) {
-                        Place place = mPlacesAdapter.getItem(position);
-                        ((Callback)getActivity()).onItemSelected(place);
+                        long placeId = mPlacesAdapter.getPlaceId(position);
+                        ((Callback)getActivity()).onItemSelected(placeId);
                     }
                 })
         );
@@ -146,7 +148,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         return new CursorLoader(
                 getActivity(),
                 placesUri,
-                PLACE_COLUMNS,
+                PLACES_COLUMNS,
                 null,
                 null,
                 sortOrder

@@ -4,6 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ public class PlacesProvider extends ContentProvider {
     private PlacesDBHelper mPlacesDBHelper;
 
     static final int PLACES = 100;
+    static final int PLACE = 101;
 
     @Override
     public boolean onCreate() {
@@ -34,9 +36,9 @@ public class PlacesProvider extends ContentProvider {
             case PLACES:
                 retCursor = mPlacesDBHelper.getReadableDatabase().query(
                         PlacesContract.PlaceEntry.TABLE_NAME,
-                        null,
-                        null,
-                        null,
+                        projections,
+                        selection,
+                        selectionArgs,
                         null,
                         null,
                         sortOrder
@@ -55,6 +57,8 @@ public class PlacesProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)){
             case PLACES:
                 return PlacesContract.PlaceEntry.CONTENT_TYPE;
+            case PLACE:
+                return PlacesContract.PlaceEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown Uri: " + uri);
         }
@@ -70,12 +74,16 @@ public class PlacesProvider extends ContentProvider {
         switch (match){
             case PLACES:
                 long _id = db.insert(PlacesContract.PlaceEntry.TABLE_NAME, null, contentValues);
+                if(_id > 0)
+                    returnUri = PlacesContract.PlaceEntry.buildPlaceUri(_id);
+                else
+                    throw new SQLException("Failed to insert row into : " + uri);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
         getContext().getContentResolver().notifyChange(uri, null);
-        return null;
+        return returnUri;
     }
 
     @Override
@@ -100,8 +108,25 @@ public class PlacesProvider extends ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues contentValues, String s, String[] strings) {
-        return 0;
+    public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs) {
+        int rowsUpdated = 0;
+        final SQLiteDatabase db = new PlacesDBHelper(getContext()).getWritableDatabase();
+        switch(sUriMatcher.match(uri)){
+            case PLACE:
+                rowsUpdated = db.update(
+                        PlacesContract.PlaceEntry.TABLE_NAME,
+                        contentValues,
+                        selection,
+                        selectionArgs
+                );
+                break;
+            default:
+                throw new UnsupportedOperationException("Update URI not found: " + uri);
+        }
+        if(rowsUpdated > 0){
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 
 
@@ -112,7 +137,7 @@ public class PlacesProvider extends ContentProvider {
 
         // For each type of URI you want to add, create a corresponding code.
         matcher.addURI(authority, PlacesContract.PATH_PLACE, PLACES);
-
+        matcher.addURI(authority, PlacesContract.PATH_PLACE + "/#", PLACE);
         return matcher;
     }
 }

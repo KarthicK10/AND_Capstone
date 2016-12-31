@@ -10,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.karthick.goplaces.R;
-import com.example.karthick.goplaces.data.Place;
 import com.example.karthick.goplaces.ui.MainActivityFragment;
 
 /**
@@ -129,10 +128,8 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesAdap
      * @param - The position to retrieve from
      * @return - The place item at position
      */
-    public Place getItem(int position){
+    public long getPlaceId(int position){
         mCursor.moveToPosition(position);
-        return new Place(
-                mCursor.getString(MainActivityFragment.COL_PLACE_NAME),
-                mCursor.getString(MainActivityFragment.COL_PLACE_ADDRESS));
+        return mCursor.getLong(MainActivityFragment.COL_PLACE_ID);
     }
 }
