@@ -128,9 +128,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             mAddressTextView.setText(data.getString(COL_PLACE_ADDRESS));
 
             //set the place details
-            Log.i(LOG_TAG, "name: " + data.getString(COL_PLACE_GOOGLE_NAME));
-            Log.i(LOG_TAG, "lat: " + data.getString(COL_PLACE_LAT));
-            Log.i(LOG_TAG, "lng: " + data.getString(COL_PLACE_LNG));
+            Log.i(LOG_TAG, data.getString(COL_PLACE_GOOGLE_NAME));
+            Log.i(LOG_TAG, data.getString(COL_PLACE_LAT));
+            Log.i(LOG_TAG, data.getString(COL_PLACE_LNG));
             mGoogleName.setText(data.getString(COL_PLACE_GOOGLE_NAME));
             int latFormat = R.string.format_lat;
             int lngFormat = R.string.format_lng;

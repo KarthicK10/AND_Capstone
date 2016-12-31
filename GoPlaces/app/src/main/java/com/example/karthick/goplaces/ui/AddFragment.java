@@ -15,13 +15,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.karthick.goplaces.R;
-import com.example.karthick.goplaces.google.GooglePlace;
-import com.example.karthick.goplaces.google.GooglePlacesIntentService;
 import com.example.karthick.goplaces.data.Place;
 import com.example.karthick.goplaces.data.PlacesContract;
+import com.example.karthick.goplaces.google.GooglePlace;
+import com.example.karthick.goplaces.google.GooglePlacesIntentService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -75,8 +74,6 @@ public class AddFragment extends Fragment {
 
                 if(validatePlace(place)){
                     long addedPlace_id = addPlace(place);
-                    Toast toast = Toast.makeText(getContext(), place.getName() + " added to Places", Toast.LENGTH_SHORT);
-                    toast.show();
                     //Update the widgets
                     updateWidgets();
                     //update place details from Google
