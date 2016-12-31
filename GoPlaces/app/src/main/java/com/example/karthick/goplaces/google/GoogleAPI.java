@@ -1,4 +1,4 @@
-package com.example.karthick.goplaces.data;
+package com.example.karthick.goplaces.google;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -1,4 +1,4 @@
-package com.example.karthick.goplaces.data;
+package com.example.karthick.goplaces.google;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,10 +1,12 @@
-package com.example.karthick.goplaces.data;
+package com.example.karthick.goplaces.google;
 
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
+import com.example.karthick.goplaces.data.PlacesContract;
 
 import java.util.ArrayList;
 

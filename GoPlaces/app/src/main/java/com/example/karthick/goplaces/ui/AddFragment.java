@@ -18,8 +18,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.karthick.goplaces.R;
-import com.example.karthick.goplaces.data.GooglePlace;
-import com.example.karthick.goplaces.data.GooglePlacesIntentService;
+import com.example.karthick.goplaces.google.GooglePlace;
+import com.example.karthick.goplaces.google.GooglePlacesIntentService;
 import com.example.karthick.goplaces.data.Place;
 import com.example.karthick.goplaces.data.PlacesContract;
 import com.google.android.gms.common.ConnectionResult;

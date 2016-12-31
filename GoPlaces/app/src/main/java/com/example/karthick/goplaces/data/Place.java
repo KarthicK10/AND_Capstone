@@ -1,5 +1,7 @@
 package com.example.karthick.goplaces.data;
 
+import com.example.karthick.goplaces.google.GooglePlace;
+
 /**
  * Created by KarthicK on 12/25/2016.
  */
