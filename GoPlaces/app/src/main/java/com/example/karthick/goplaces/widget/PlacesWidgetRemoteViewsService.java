@@ -67,13 +67,12 @@ public class PlacesWidgetRemoteViewsService extends RemoteViewsService {
                 }
                 RemoteViews views = new RemoteViews(getPackageName(),
                         R.layout.widget_places_list_item);
-                String name = data.getString(1);
-                String address = data.getString(2);
+                String name = data.getString(2);
+                String address = data.getString(4);
                 views.setTextViewText(R.id.list_item_place_label, name);
 
                 final Intent fillInIntent = new Intent();
-                fillInIntent.putExtra(Place.PLACE_NAME_KEY, name);
-                fillInIntent.putExtra(Place.PLACE_ADDRESS_KEY, address);
+                fillInIntent.putExtra(Place.PLACE_ID_KEY, Long.parseLong(data.getString(0)));
                 views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
                 return views;
             }
