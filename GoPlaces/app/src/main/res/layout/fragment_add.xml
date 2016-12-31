@@ -45,7 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|right"
-            android:text="Add"/>
+            android:text="Add"
+            android:contentDescription="@string/add_button_desc"/>
     </FrameLayout>
 
     <ImageView
@@ -54,6 +55,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/powered_by_google_light"
         android:scaleType="fitCenter"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginTop="4dp"
+        android:contentDescription="@string/powered_by_google_desc"/>
 
 </LinearLayout>
