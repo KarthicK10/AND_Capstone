@@ -11,6 +11,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -128,9 +129,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             mAddressTextView.setText(data.getString(COL_PLACE_ADDRESS));
 
             //set the place details
-            Log.i(LOG_TAG, data.getString(COL_PLACE_GOOGLE_NAME));
-            Log.i(LOG_TAG, data.getString(COL_PLACE_LAT));
-            Log.i(LOG_TAG, data.getString(COL_PLACE_LNG));
+            if(!(TextUtils.isEmpty(data.getString(COL_PLACE_GOOGLE_NAME))))
+                Log.i(LOG_TAG, data.getString(COL_PLACE_GOOGLE_NAME));
             mGoogleName.setText(data.getString(COL_PLACE_GOOGLE_NAME));
             int latFormat = R.string.format_lat;
             int lngFormat = R.string.format_lng;
